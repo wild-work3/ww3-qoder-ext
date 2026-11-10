@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "qoder",
+  "kind": "channel",
+  "model": "qoder/qwen3.7-flash",
+  "live_model": "qoder/qwen3.7-flash",
+  "auth": {
+    "accessToken": "mock-qoder-token",
+    "expiresAt": 2051222400,
+    "machineId": "mock-machine",
+    "machineToken": "mock-mt",
+    "machineType": "mac",
+    "nickname": "qoder-mock",
+    "refreshToken": "drt-mock-qoder",
+    "uid": "qoder-mock"
+  },
+  "account": {
+    "nickname": "qoder-mock",
+    "uid": "qoder-mock"
+  },
+  "extra_config": {
+    "region": "qoder"
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "path": ".*/model/list.*",
+      "kind": "json",
+      "body": "{\"assistant\":[{\"key\":\"q37fmodel\",\"display_name\":\"qwen3.7-flash\",\"enable\":true,\n\t\t\"is_default\":true,\"format\":\"openai\",\"source\":\"system\",\n\t\t\"context_config\":{\"standard\":{\"is_default\":true,\"token_count\":180000}}}]}"
+    },
+    {
+      "method": "POST",
+      "path": ".*agent_chat_generation.*",
+      "kind": "sse_raw",
+      "body": "data: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"你好，\\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qoder-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"我是 qoder \\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qoder-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{\\\"content\\\":\\\"mock 上游。\\\"},\\\"index\\\":0}],\\\"id\\\":\\\"qoder-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[],\\\"id\\\":\\\"qoder-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\",\\\"usage\\\":{\\\"completion_tokens\\\":9,\\\"prompt_tokens\\\":12,\\\"prompt_tokens_details\\\":{\\\"cached_tokens\\\":4},\\\"total_tokens\\\":21}}\",\"headers\":{},\"statusCodeValue\":200}\n\ndata: {\"body\":\"{\\\"choices\\\":[{\\\"delta\\\":{},\\\"finish_reason\\\":\\\"stop\\\",\\\"index\\\":0}],\\\"id\\\":\\\"qoder-mock\\\",\\\"model\\\":\\\"mock-flash\\\",\\\"object\\\":\\\"chat.completion.chunk\\\"}\",\"headers\":{},\"statusCodeValue\":200}\n"
+    },
+    {
+      "method": "POST",
+      "path": ".*deviceToken/refresh.*",
+      "kind": "json",
+      "body": "{\"token\":\"mock-qoder-2\",\"device_token\":\"mock-qoder-2\",\"refresh_token\":\"drt-mock-2\",\"expires_in\":7200000}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/api/v1/userinfo.*",
+      "kind": "json",
+      "body": "{\"user\":{\"id\":\"qoder-mock\",\"name\":\"qoder-mock\"},\"name\":\"qoder-mock\",\"uid\":\"qoder-mock\"}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/api/v2/quota/usage.*",
+      "kind": "json",
+      "body": "{\"quota\":{\"used\":0,\"total\":1000},\"used\":0,\"total\":1000}"
+    },
+    {
+      "method": "GET",
+      "path": ".*/api/v2/user/plan.*",
+      "kind": "json",
+      "body": "{\"plan\":\"free\"}"
+    }
+  ],
+  "auth_prefixes": [
+    "qoder",
+    "qodercn",
+    "qodercom"
+  ],
+  "notes": [
+    "三区单插件（region=qoder/qodercn/qodercom）；嵌套 SSE 信封；device_poll 登录"
+  ]
+}
